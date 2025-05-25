@@ -1,0 +1,12 @@
+#pragma once
+
+namespace EigenLib
+{
+namespace version
+{
+constexpr int major          = @PROJECT_VERSION_MAJOR@;
+constexpr int minor          = @PROJECT_VERSION_MINOR@;
+constexpr int patch          = @PROJECT_VERSION_PATCH@;
+constexpr const char* string = "@PROJECT_VERSION@";
+}  // namespace version
+}  // namespace EigenLib

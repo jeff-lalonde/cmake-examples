@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# The script parent directory.
+scriptPath=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+# Echo command and execute.
+Run()
+{
+    echo "${@}"
+    "${@}"
+}
+
+# Go to the projects directory the project paths are just the project names.
+cd "${scriptPath}"/..
+
+for project in dependencies/*/ ; do
+    if [ -f "${project}/CMakeLists.txt" ]; then
+        "${scriptPath}"/clean "${project}"
+    fi
+done
+
+Run rm -rf dependencies/install
