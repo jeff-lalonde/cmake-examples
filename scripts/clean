@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Remove the build and install directories of a CMake project.
+
+if [ $# -lt 1 ]; then
+    echo "You must specify at least one CMake project directory.  e.g. app1"
+    echo "Example:"
+    echo "${0} app1"
+    exit 1
+fi
+
+# Echo command and execute.
+Run()
+{
+    echo "${@}"
+    "${@}"
+}
+
+for project in "${@}"; do
+
+    # Get the project source path.
+    projectPath="$(realpath ${project})"
+
+    if [[ ! -d "${projectPath}" ]]; then
+        echo "ERROR: ${projectPath} is not a directory."
+        continue
+    fi
+
+    # Remove all the build directories.
+    for item in build install; do
+        directory="${projectPath}/${item}"
+        if [[ -d "${directory}" ]]; then
+            Run rm -rf "${directory}"
+        fi
+    done
+
+done

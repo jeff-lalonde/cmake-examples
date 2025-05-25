@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# The script parent directory.
+scriptPath=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+# Go to the projects directory the project paths are just the project names.
+cd "${scriptPath}"/..
+
+for project in */ ; do
+    if [ -f "${project}/CMakeLists.txt" ]; then
+        "${scriptPath}"/clean "${project}"
+    fi
+done

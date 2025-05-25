@@ -1,0 +1,35 @@
+#!/bin/bash
+set -e
+
+# Build a cmake project.
+if [ $# -lt 1 ]; then
+    echo "At least one argument is required."
+    echo "1. The CMake project directory.  e.g. CMakeProject"
+    echo "2. (Optional) CMake options. e.g. -DCMAKE_BUILD_TYPE=Debug"
+    echo "Example"
+    echo "build CMakeProject -DCMAKE_BUILD_TYPE=Debug"
+    exit 1
+fi
+
+# Echo command and execute.
+function Run
+{
+    echo "${@}"
+    "${@}"
+}
+
+# The first argument is the project source path.
+sourcePath="$1"
+
+# Additional arguments are CMake options.
+cmakeOptions=("${@:2}")
+
+# Set the build path.
+buildPath="${sourcePath}/build"
+
+# CMake configure. 
+Run cmake -H"${sourcePath}" -B"${buildPath}" "${cmakeOptions[@]}"
+
+# CMake build.
+Run cmake --build "${buildPath}"
+
